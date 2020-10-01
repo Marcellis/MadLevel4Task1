@@ -2,24 +2,18 @@ package com.example.madlevel4task1
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.madlevel4task1.databinding.FragmentShoppingListBinding
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.add_product_dialog.*
 import kotlinx.android.synthetic.main.fragment_shopping_list.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -62,7 +56,7 @@ class ShoppingListFragment : Fragment() {
         initRv()
 
         fabAddProduct.setOnClickListener {
-            showAddProductdialog();
+            showAddProductdialog()
         }
 
         fabDeleteAll.setOnClickListener {
