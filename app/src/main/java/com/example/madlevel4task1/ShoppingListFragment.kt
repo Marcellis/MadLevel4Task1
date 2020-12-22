@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_shopping_list.*
+import com.example.madlevel4task1.databinding.FragmentShoppingListBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,21 +25,22 @@ import kotlinx.coroutines.withContext
  */
 class ShoppingListFragment : Fragment() {
 
+    private var _binding: FragmentShoppingListBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var productRepository: ProductRepository
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
     private val products = arrayListOf<Product>()
     private val shoppingListAdapter = ShoppingListAdapter(products)
 
-//    private lateinit var binding: FragmentShoppingListBinding
-
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shopping_list, container, false)
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentShoppingListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,11 +56,11 @@ class ShoppingListFragment : Fragment() {
 
         initRv()
 
-        fabAddProduct.setOnClickListener {
+        binding.fabAddProduct.setOnClickListener {
             showAddProductdialog()
         }
 
-        fabDeleteAll.setOnClickListener {
+        binding.fabDeleteAll.setOnClickListener {
             removeAllProducts()
         }
 
@@ -68,10 +69,16 @@ class ShoppingListFragment : Fragment() {
     private fun initRv() {
 
         // Initialize the recycler view with a linear layout manager, adapter
-        rvShoppingList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        rvShoppingList.adapter = shoppingListAdapter
-        rvShoppingList.setHasFixedSize(true)
-        rvShoppingList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.rvShoppingList.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.rvShoppingList.adapter = shoppingListAdapter
+        binding.rvShoppingList.setHasFixedSize(true)
+        binding.rvShoppingList.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 //        btnAddReminder.setOnClickListener {
 //            val reminder = binding.etReminder.text.toString()
 //            addReminder(reminder)
@@ -85,7 +92,7 @@ class ShoppingListFragment : Fragment() {
 //                DividerItemDecoration.VERTICAL
 //            )
 //        )
-        createItemTouchHelper().attachToRecyclerView(rvShoppingList)
+        createItemTouchHelper().attachToRecyclerView(binding.rvShoppingList)
 
 //        rv_shopping_list.apply {
 //            setHasFixedSize(true)
@@ -126,8 +133,8 @@ class ShoppingListFragment : Fragment() {
         }
     }
 
-    private fun validateFields(txtProductName: EditText
-                               , txtAmount: EditText
+    private fun validateFields(
+        txtProductName: EditText, txtAmount: EditText
     ): Boolean {
         return if (txtProductName.text.toString().isNotBlank()
             && txtAmount.text.toString().isNotBlank()
